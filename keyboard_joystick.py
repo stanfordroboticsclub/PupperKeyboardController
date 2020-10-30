@@ -29,6 +29,14 @@ if __name__ == "__main__":
     win.fill((255,255,255))
     win.blit(text_surface, (40,100))
 
+
+    rx_ = 0.0
+    ry_ = 0.0
+    lx_ = 0.0
+    ly_ = 0.0
+    l_alpha = 0.15
+    r_alpha = 0.3
+
     while True:
         pygame.event.pump()
         
@@ -54,10 +62,14 @@ if __name__ == "__main__":
         else:
             key = pygame.key.get_pressed()
             msg = {}
-            msg["lx"] = 0.75 * direction_helper(key[pygame.K_a], key[pygame.K_d])
-            msg["ly"] = 0.75 * direction_helper(key[pygame.K_s], key[pygame.K_w])
-            msg["rx"] = 0.75 * direction_helper(key[pygame.K_LEFT], key[pygame.K_RIGHT])
-            msg["ry"] = 0.75 * direction_helper(key[pygame.K_DOWN], key[pygame.K_UP])
+            lx_ = l_alpha * direction_helper(key[pygame.K_a], key[pygame.K_d]) + (1 - l_alpha) * lx_
+            msg["lx"] = lx_
+            ly_ = l_alpha * direction_helper(key[pygame.K_s], key[pygame.K_w]) + (1 - l_alpha) * ly_
+            msg["ly"] = ly_
+            rx_ = r_alpha * direction_helper(key[pygame.K_LEFT], key[pygame.K_RIGHT]) + (1 - r_alpha) * rx_
+            msg["rx"] = rx_
+            ry_ = r_alpha * direction_helper(key[pygame.K_DOWN], key[pygame.K_UP]) + (1 - r_alpha) * ry_
+            msg["ry"] = ry_
             msg["x"] = 1 if key[pygame.K_x] else 0
             msg["square"] = 1 if key[pygame.K_u] else 0
             msg["circle"] = 1 if key[pygame.K_c] else 0
